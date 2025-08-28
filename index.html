@@ -84,10 +84,6 @@
       </li>
 
       <li class="bold">
-        <a aria-label="Navigate to the About section" href="#about" class="waves-effect waves-dark teal-text"><i
-            class="mdi-social-person small"></i><span>About</span></a>
-      </li>
-      <li class="bold">
         <a aria-label="Navigate to the Experience section" href="#experience"
           class="waves-effect waves-dark teal-text"><i
             class="mdi-action-trending-up small"></i><span>Experience</span></a>
@@ -167,10 +163,6 @@
   <nav class="hide-on-large only">
     <ul id="slide-out" class="side-nav">
       <li class="bold">
-        <a aria-label="Navigate to the About section" href="#about" class="waves-effect waves-dark teal-text"><i
-            class="mdi-social-person small"></i><span>About</span></a>
-      </li>
-      <li class="bold">
         <a aria-label="Navigate to the Experience section" href="#experience"
           class="waves-effect waves-dark teal-text"><i
             class="mdi-action-trending-up small"></i><span>Experience</span></a>
@@ -248,8 +240,7 @@
               </a> -->
               </div>
               <div class='buttons'>
-                <a href="#about" class="readme">Read More</a>
-                <a href="#contact" class="contactme">Contact Me</a>
+                <a href="#experience" class="readme">Read More</a>
                 <a href="https://wassim31.github.io/assets/resume/resume.pdf" class="readme">Resume</a>
 
               </div>
@@ -257,47 +248,6 @@
           </div>
         </div>
     </section>
-
-    <!-- Second Section: About -->
-    <section id="about" class="section scrollspy">
-      <h3 class="page-title white-text teal">About</h3>
-      <div class="container flow-text">
-        <!-- <blockquote>
-          <h2>
-            A Software Developer with a passion for Backend Development and Artificial Intelligence.
-
-          </h2>
-        </blockquote> -->
-        <p>
-        <ul>
-          <li><b>Languages:</b> Java, Python, C, JavaScript</li>
-          <li><b>Databases:</b> PostgreSQL, NoSQL, Redis, MySQL</li>
-          <li><b>Frameworks:</b> Spring Boot, Django, ReactJS, Django Rest Framework</li>
-          <li><b>Tools & Technologies:</b> AWS, Docker, Ansible, Kubernetes, Git, GitLab CI, REST APIs, Microservices
-          </li>
-          <li><b>Specializations:</b> Distributed Systems, Algorithms, Data Structures</li>
-        </ul>
-
-        </p>
-
-        <p>
-          Looking for an opportunity to work in a challenging position combining my skills in Backend Engineering and
-          Distributed Systems, which provides professional development, interesting experiences and personal growth.
-        </p>
-        <!-- <p>
-          Another Paragraph
-        </p>  -->
-        <!-- <p>
-        <strong>Current Focus</strong>:&nbsp;<a aria-label="Navigate to the Inclusive Design Patterns homepage"
-          href="https://www.smashingmagazine.com/inclusive-design-patterns/">Accessibility</a>&nbsp;//&nbsp;<a
-          aria-label="Navigate to the Full Stack React homepage"
-          href="https://www.fullstackreact.com/">React</a>&nbsp;//&nbsp;<a
-          aria-label='Navigate to the article "Scalable CSS"'
-          href="https://mrmrs.github.io/writing/2016/03/24/scalable-css/">Design Systems</a>
-        </p> -->
-      </div>
-    </section>
-
 
     <!-- Third Section: Experience -->
     <section id="experience" class="section scrollspy">
@@ -367,7 +317,7 @@
                 under 1 hour.
               </li>
               <li></li>
-                <b>Tools:</b> Django, Django Rest Framework, WebSockets, Docker, GitLab CI/CD
+              <b>Tools:</b> Django, Django Rest Framework, WebSockets, Docker, GitLab CI/CD
               </li>
             </ul>
           </div>
@@ -582,18 +532,24 @@
       <h3 class="page-title white-text teal">Articles</h3>
       <div class="container">
         <h4 class="brown-text light center-align" style="margin-bottom: 40px;">Latest Articles & Blog Posts</h4>
-        
+
         <div class="row">
           <!-- Article 1 -->
           <div class="col s12 m6 l4">
             <div class="card hoverable" style="border-radius: 15px; height: 400px;">
               <div class="card-image">
-                <img src="https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fne2gmtm02hzjhreiyrfc.jpeg" 
-                     alt="Saving the state of an interactive container" style="height: 200px; object-fit: cover;">
+                <img
+                  src="https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fne2gmtm02hzjhreiyrfc.jpeg"
+                  alt="Saving the state of an interactive container" style="height: 200px; object-fit: cover;">
               </div>
-              <div class="card-content" style="padding: 16px; height: 160px; display: flex; flex-direction: column;">
-                <span class="card-title" style="font-size: 16px; font-weight: bold; line-height: 1.3; margin-bottom: 8px;">
-                  Saving the state of an interactive container
+              <div class="card-content" style="padding: 16px; height: 200px; display: flex; flex-direction: column;">
+                <span class="card-title"
+                  style="font-size: 16px; font-weight: bold; line-height: 1.3; margin-bottom: 8px;">
+                  <a href="https://dev.to/wassim31/saving-the-state-of-an-interactive-container-3pnj" target="_blank"
+                    style="color: inherit; text-decoration: none;">
+                    Saving the state of an interactive container
+                    <i class="fa fa-external-link" style="font-size: 12px; margin-left: 8px; color: #26a69a;"></i>
+                  </a>
                 </span>
                 <p style="font-size: 14px; color: #666; flex-grow: 1; margin: 0;">
                   Sometimes we need to start a docker container in an interactive shell for testing purposes, and...
@@ -603,24 +559,24 @@
                   <span style="font-size: 12px; color: #999;">❤️ 6</span>
                 </div>
               </div>
-              <div class="card-action" style="padding: 8px 16px;">
-                <a href="https://dev.to/wassim31/saving-the-state-of-an-interactive-container-3pnj" target="_blank" 
-                   class="btn-small white" style="border-radius: 20px; width: 100%; color: #26a69a; font-weight: bold; border: 2px solid #26a69a;">
-                  <i class="fa fa-external-link left"></i>Read Article
-                </a>
-              </div>
             </div>
           </div>
 
           <!-- Article 2 -->
           <div class="col s12 m6 l4">
             <div class="card hoverable" style="border-radius: 15px; height: 400px;">
-              <div class="card-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 200px; display: flex; align-items: center; justify-content: center;">
+              <div class="card-image"
+                style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 200px; display: flex; align-items: center; justify-content: center;">
                 <i class="fa fa-ubuntu" style="font-size: 48px; color: white;"></i>
               </div>
-              <div class="card-content" style="padding: 16px; height: 160px; display: flex; flex-direction: column;">
-                <span class="card-title" style="font-size: 16px; font-weight: bold; line-height: 1.3; margin-bottom: 8px;">
-                  Install OpenCV 4.5 on Ubuntu 22.04
+              <div class="card-content" style="padding: 16px; height: 200px; display: flex; flex-direction: column;">
+                <span class="card-title"
+                  style="font-size: 16px; font-weight: bold; line-height: 1.3; margin-bottom: 8px;">
+                  <a href="https://dev.to/wassim31/install-opencv-45-on-ubuntu-2204-306i" target="_blank"
+                    style="color: inherit; text-decoration: none;">
+                    Install OpenCV 4.5 on Ubuntu 22.04
+                    <i class="fa fa-external-link" style="font-size: 12px; margin-left: 8px; color: #26a69a;"></i>
+                  </a>
                 </span>
                 <p style="font-size: 14px; color: #666; flex-grow: 1; margin: 0;">
                   OpenCV (Open Source Computer Vision Library) is a library of programming functions mainly for...
@@ -630,24 +586,24 @@
                   <span style="font-size: 12px; color: #999;">❤️ 2</span>
                 </div>
               </div>
-              <div class="card-action" style="padding: 8px 16px;">
-                <a href="https://dev.to/wassim31/install-opencv-45-on-ubuntu-2204-306i" target="_blank" 
-                   class="btn-small white" style="border-radius: 20px; width: 100%; color: #26a69a; font-weight: bold; border: 2px solid #26a69a;">
-                  <i class="fa fa-external-link left"></i>Read Article
-                </a>
-              </div>
             </div>
           </div>
 
           <!-- Article 3 -->
           <div class="col s12 m6 l4">
             <div class="card hoverable" style="border-radius: 15px; height: 400px;">
-              <div class="card-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); height: 200px; display: flex; align-items: center; justify-content: center;">
+              <div class="card-image"
+                style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); height: 200px; display: flex; align-items: center; justify-content: center;">
                 <i class="fa fa-hdd-o" style="font-size: 48px; color: white;"></i>
               </div>
-              <div class="card-content" style="padding: 16px; height: 160px; display: flex; flex-direction: column;">
-                <span class="card-title" style="font-size: 16px; font-weight: bold; line-height: 1.3; margin-bottom: 8px;">
-                  Real-time Disk Size Expanding in a Linux virtual machine
+              <div class="card-content" style="padding: 16px; height: 200px; display: flex; flex-direction: column;">
+                <span class="card-title"
+                  style="font-size: 16px; font-weight: bold; line-height: 1.3; margin-bottom: 8px;">
+                  <a href="https://dev.to/wassim31/real-time-disk-size-expanding-in-a-virtual-machine-on-linux-machine-307i"
+                    target="_blank" style="color: inherit; text-decoration: none;">
+                    Real-time Disk Size Expanding in a Linux virtual machine
+                    <i class="fa fa-external-link" style="font-size: 12px; margin-left: 8px; color: #26a69a;"></i>
+                  </a>
                 </span>
                 <p style="font-size: 14px; color: #666; flex-grow: 1; margin: 0;">
                   I was compiling the Linux kernel from source and i had a vm running AlmaLinux with 20GB...
@@ -657,12 +613,6 @@
                   <span style="font-size: 12px; color: #999;">❤️ 11</span>
                 </div>
               </div>
-              <div class="card-action" style="padding: 8px 16px;">
-                <a href="https://dev.to/wassim31/real-time-disk-size-expanding-in-a-virtual-machine-on-linux-machine-307i" target="_blank" 
-                   class="btn-small white" style="border-radius: 20px; width: 100%; color: #26a69a; font-weight: bold; border: 2px solid #26a69a;">
-                  <i class="fa fa-external-link left"></i>Read Article
-                </a>
-              </div>
             </div>
           </div>
 
@@ -670,12 +620,18 @@
           <div class="col s12 m6 l4">
             <div class="card hoverable" style="border-radius: 15px; height: 400px;">
               <div class="card-image">
-                <img src="https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fkxd4fhmb71cjae2rwrzx.png" 
-                     alt="CAFE BABE" style="height: 200px; object-fit: cover;">
+                <img
+                  src="https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fkxd4fhmb71cjae2rwrzx.png"
+                  alt="CAFE BABE" style="height: 200px; object-fit: cover;">
               </div>
-              <div class="card-content" style="padding: 16px; height: 160px; display: flex; flex-direction: column;">
-                <span class="card-title" style="font-size: 16px; font-weight: bold; line-height: 1.3; margin-bottom: 8px;">
-                  CAFE BABE, if you know, you know JVM enthusiast.
+              <div class="card-content" style="padding: 16px; height: 200px; display: flex; flex-direction: column;">
+                <span class="card-title"
+                  style="font-size: 16px; font-weight: bold; line-height: 1.3; margin-bottom: 8px;">
+                  <a href="https://dev.to/wassim31/cafe-babe-if-you-know-you-know-jvm-enthusiast-nda" target="_blank"
+                    style="color: inherit; text-decoration: none;">
+                    CAFE BABE, if you know, you know JVM enthusiast.
+                    <i class="fa fa-external-link" style="font-size: 12px; margin-left: 8px; color: #26a69a;"></i>
+                  </a>
                 </span>
                 <p style="font-size: 14px; color: #666; flex-grow: 1; margin: 0;">
                   Each program has a magic word in it's machine code...
@@ -685,12 +641,6 @@
                   <span style="font-size: 12px; color: #999;">💬 0</span>
                 </div>
               </div>
-              <div class="card-action" style="padding: 8px 16px;">
-                <a href="https://dev.to/wassim31/cafe-babe-if-you-know-you-know-jvm-enthusiast-nda" target="_blank" 
-                   class="btn-small white" style="border-radius: 20px; width: 100%; color: #26a69a; font-weight: bold; border: 2px solid #26a69a;">
-                  <i class="fa fa-external-link left"></i>Read Article
-                </a>
-              </div>
             </div>
           </div>
 
@@ -698,12 +648,18 @@
           <div class="col s12 m6 l4">
             <div class="card hoverable" style="border-radius: 15px; height: 400px;">
               <div class="card-image">
-                <img src="https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Ful6utag8s0mix33cre1z.png" 
-                     alt="Memory functions" style="height: 200px; object-fit: cover;">
+                <img
+                  src="https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Ful6utag8s0mix33cre1z.png"
+                  alt="Memory functions" style="height: 200px; object-fit: cover;">
               </div>
-              <div class="card-content" style="padding: 16px; height: 160px; display: flex; flex-direction: column;">
-                <span class="card-title" style="font-size: 16px; font-weight: bold; line-height: 1.3; margin-bottom: 8px;">
-                  How your program's functions are handled in memory?
+              <div class="card-content" style="padding: 16px; height: 200px; display: flex; flex-direction: column;">
+                <span class="card-title"
+                  style="font-size: 16px; font-weight: bold; line-height: 1.3; margin-bottom: 8px;">
+                  <a href="https://dev.to/wassim31/how-your-programs-functions-are-handled-in-memory--afl"
+                    target="_blank" style="color: inherit; text-decoration: none;">
+                    How your program's functions are handled in memory?
+                    <i class="fa fa-external-link" style="font-size: 12px; margin-left: 8px; color: #26a69a;"></i>
+                  </a>
                 </span>
                 <p style="font-size: 14px; color: #666; flex-grow: 1; margin: 0;">
                   Because i always forget how the kernel is handling the program's functions in the call stack...
@@ -713,24 +669,24 @@
                   <span style="font-size: 12px; color: #999;">💬 0</span>
                 </div>
               </div>
-              <div class="card-action" style="padding: 8px 16px;">
-                <a href="https://dev.to/wassim31/how-your-programs-functions-are-handled-in-memory--afl" target="_blank" 
-                   class="btn-small white" style="border-radius: 20px; width: 100%; color: #26a69a; font-weight: bold; border: 2px solid #26a69a;">
-                  <i class="fa fa-external-link left"></i>Read Article
-                </a>
-              </div>
             </div>
           </div>
 
           <!-- Article 6 -->
           <div class="col s12 m6 l4">
             <div class="card hoverable" style="border-radius: 15px; height: 400px;">
-              <div class="card-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); height: 200px; display: flex; align-items: center; justify-content: center;">
+              <div class="card-image"
+                style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); height: 200px; display: flex; align-items: center; justify-content: center;">
                 <i class="fa fa-microchip" style="font-size: 48px; color: white;"></i>
               </div>
-              <div class="card-content" style="padding: 16px; height: 160px; display: flex; flex-direction: column;">
-                <span class="card-title" style="font-size: 16px; font-weight: bold; line-height: 1.3; margin-bottom: 8px;">
-                  What the heck is locality of reference?
+              <div class="card-content" style="padding: 16px; height: 200px; display: flex; flex-direction: column;">
+                <span class="card-title"
+                  style="font-size: 16px; font-weight: bold; line-height: 1.3; margin-bottom: 8px;">
+                  <a href="https://dev.to/wassim31/what-the-heck-is-locality-of-reference-why-i-will-waste-brain-cells-bytes-to-know-it-1l48"
+                    target="_blank" style="color: inherit; text-decoration: none;">
+                    What the heck is locality of reference?
+                    <i class="fa fa-external-link" style="font-size: 12px; margin-left: 8px; color: #26a69a;"></i>
+                  </a>
                 </span>
                 <p style="font-size: 14px; color: #666; flex-grow: 1; margin: 0;">
                   Locality of Reference is a critical Computer Science topic and helps improving the software's...
@@ -740,21 +696,17 @@
                   <span style="font-size: 12px; color: #999;">💬 0</span>
                 </div>
               </div>
-              <div class="card-action" style="padding: 8px 16px;">
-                <a href="https://dev.to/wassim31/what-the-heck-is-locality-of-reference-why-i-will-waste-brain-cells-bytes-to-know-it-1l48" target="_blank" 
-                   class="btn-small white" style="border-radius: 20px; width: 100%; color: #26a69a; font-weight: bold; border: 2px solid #26a69a;">
-                  <i class="fa fa-external-link left"></i>Read Article
-                </a>
-              </div>
             </div>
           </div>
         </div>
 
         <div class="center-align" style="margin-top: 40px;">
-          <a href="https://dev.to/wassim31" target="_blank" class="btn-large teal" style="border-radius: 25px; font-weight: bold;">
+          <a href="https://dev.to/wassim31" target="_blank" class="btn-large teal"
+            style="border-radius: 25px; font-weight: bold;">
             <i class="fa fa-external-link left"></i>View All Articles on Dev.to
           </a>
-          <p style="font-size: 16px; color: #666; margin-top: 20px;">Follow me for more technical insights and tutorials</p>
+          <p style="font-size: 16px; color: #666; margin-top: 20px;">Follow me for more technical insights and tutorials
+          </p>
         </div>
       </div>
     </section>
@@ -785,24 +737,6 @@
               </div>
               <div class="col s4 m2">
                 <img alt="" src="/assets/img/mysql-logo-1-300x300.jpg" class="responsive-img" />MySQL
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Frameworks -->
-        <div class="card">
-          <div class="card-content">
-            <h4 class="brown-text light">Frameworks</h4>
-            <div class="row text-center">
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/spring-boot-logo.png" class="responsive-img" />Spring Boot
-              </div>
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/django-logo.png" class="responsive-img" />Django
-              </div>
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/react-logo.png" class="responsive-img" />ReactJS
               </div>
             </div>
           </div>
