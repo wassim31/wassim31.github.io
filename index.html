@@ -208,11 +208,11 @@
               <h2>Hi, I'm <span class="teal">Wassim Boussebha.</span></h2>
               <h5 style="color:#fff">A <span class="typing" style="font-weight: 300; color:#004d40"></span></h5>
               <!-- <h5 style="color:#00796b">A <span class="typing" style="font-weight: 300; color:#fff"></span></h5> -->
-              <h5>A recently graduated Software Engineer with two years of
-                professional experience in backend development, systems engineering, and cloud technologies. My
-                background bridges low-level systems (Linux kernel, networking, C) with high-level backend development
-                (Java, Spring Boot, Python, Django, Docker, Kubernetes, AWS), giving me a tool-agnostic and
-                problem-solving mindset.. </h5>
+              <h5>PhD researcher at IMT Atlantique working at the intersection of distributed systems, storage systems, cloud computing, and operating systems. 
+
+My research focuses on improving data movement efficiency in large-scale distributed infrastructures through novel storage and networking abstractions.
+
+My broader interests include Linux kernel systems, cloud infrastructures management and cloud-native apps( Kubernetes & eBPF )</h5>
               <div class="social">
                 <a href="https://linkedin.com/in/wassimboussebha" target="_blank">
                   <button class="icon-btn linkedin">
@@ -253,6 +253,80 @@
     <section id="experience" class="section scrollspy">
       <h3 class="page-title white-text teal">Experience</h3>
       <div class="container">
+
+        <div class="card">
+          <div class="card-content">
+            <div class="row">
+              <div class="col s12 m2">
+                <img alt="IMT Atlantique logo" src="/assets/img/imt.png" class="responsive-img center-block" />
+              </div>
+              <div class="col s12 m10">
+                <p>
+                  <span class="card-title"><span class="teal-text hoverline">IMT Atlantique</span></span>
+                </p>
+              </div>
+            </div>
+            <div class="role brown-text text-darken-2">Doctoral Researcher · Contract</div>
+            <ul>
+              <li>
+                Conducting research on distributed systems, storage architectures, and cloud infrastructures, with a
+                focus on reducing data movement overhead and improving resource efficiency in large-scale systems.
+              </li>
+              <li>
+                Designing operating-system and middleware mechanisms to optimize data transfer paths across distributed
+                applications and storage tiers.
+              </li>
+              <li>
+                Investigating zero-copy techniques, caching strategies, and kernel-level optimizations to improve
+                performance for data-intensive workloads.
+              </li>
+              <li>
+                Developing and evaluating research prototypes on Linux-based platforms using the <b>Grid'5000</b>
+                research data center.
+              </li>
+            </ul>
+          </div>
+          <div class="card-action">
+            <span>Jan 2026 - Present | Nantes, Pays de la Loire, France · On-site</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="row">
+              <div class="col s12 m2">
+                <img alt="Inria logo" src="/assets/img/inria-logo.png" class="responsive-img center-block" />
+              </div>
+              <div class="col s12 m10">
+                <p>
+                  <span class="card-title"><span class="teal-text hoverline">Inria</span></span>
+                </p>
+              </div>
+            </div>
+            <div class="role brown-text text-darken-2">Research Intern · Internship</div>
+            <ul>
+              <li>
+                Worked as an Open Source Developer in the <b>STACK</b> team, focusing on systems research and
+                performance optimization.
+              </li>
+              <li>
+                Implemented a zero-copy system for multi-tier architectures handling image/video workloads, overriding
+                Linux system calls (<b>send()/recv()</b>) to minimize redundant data movement across intermediate nodes.
+              </li>
+              <li>
+                Integrated <b>Redis</b> as a shared buffer, ensuring only lightweight descriptors were exchanged until
+                the client fetched the actual response.
+              </li>
+              <li>
+                Achieved a <b>30% reduction</b> in network bandwidth usage and <b>20–50% fewer I/O operations</b>,
+                improving efficiency in distributed applications.
+              </li>
+            </ul>
+          </div>
+          <div class="card-action">
+            <span>Apr 2025 - Oct 2025 · 7 mos | Remote</span>
+          </div>
+        </div>
 
         <div class="card">
           <div class="card-content">
@@ -396,6 +470,22 @@
 
         <!-- First Row -->
         <div class="row">
+          <div class="col s12 m6 l4">
+            <div class="card hoverable"
+              style="height: 250px; border-radius: 15px; background: linear-gradient(135deg, #5c6bc0 0%, #283593 100%);">
+              <div class="card-content white-text center-align">
+                <i class="fa fa-map-marker" style="font-size: 48px; margin-bottom: 15px;"></i>
+                <span class="card-title" style="font-size: 22px; font-weight: bold;">OptRoute</span>
+                <p style="margin: 15px 0; font-size: 16px;">Route optimization web app for efficient path planning and
+                  delivery routing.</p>
+                <a href="https://outstanding-creativity-production-b5ce.up.railway.app/" target="_blank"
+                  class="btn white indigo-text waves-effect waves-light" style="margin-top: 10px;">
+                  <i class="fa fa-external-link left"></i>Live Demo
+                </a>
+              </div>
+            </div>
+          </div>
+
           <div class="col s12 m6 l4">
             <div class="card hoverable"
               style="height: 250px; border-radius: 15px; background: linear-gradient(135deg, #26a69a 0%, #004d40 100%);">
