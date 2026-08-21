@@ -1,0 +1,14 @@
+FROM ruby:4.0.6-alpine
+
+RUN apk add --no-cache build-base git libffi-dev
+
+WORKDIR /site
+
+COPY Gemfile ./
+RUN bundle install --jobs 4
+
+COPY . .
+
+EXPOSE 4000
+
+CMD ["bundle", "exec", "jekyll", "serve", "--host", "0.0.0.0"]

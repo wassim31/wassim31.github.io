@@ -1,0 +1,193 @@
+---
+layout: default
+---
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "mainEntity": {
+            "@type": "Person",
+            "name": "Wassim Boussebha Abdessamed",
+            "url": "{{ site.url }}",
+            "image": "{{ site.url }}/face.jpg",
+            "jobTitle": "Backend Software Engineer and Doctoral Researcher",
+            "description": "{{ site.description }}",
+            "knowsAbout": [
+                "Distributed Systems",
+                "Storage Systems",
+                "Cloud Computing",
+                "Operating Systems",
+                "Backend Development"
+            ],
+            "sameAs": [
+                "https://github.com/wassim31",
+                "https://linkedin.com/in/wassimboussebha",
+                "https://dev.to/wassim31"
+            ]
+        }
+    }
+</script>
+
+<div class="row">
+    <div class="col-12">
+        <h1 class="home-title">Backend Software Engineer and Distributed Systems Researcher</h1>
+        <p>
+            I'm a PhD researcher at
+            <a href="https://www.imt-atlantique.fr/en">IMT Atlantique</a>
+            working at the intersection of distributed systems, storage
+            systems, cloud computing, and operating systems. My research
+            focuses on improving data movement efficiency in large-scale
+            distributed infrastructures through novel storage and networking
+            abstractions. My broader interests include Linux kernel systems,
+            cloud infrastructure management, and cloud-native applications
+            (Kubernetes &amp; eBPF).
+        </p>
+        <nav class="page-chips" aria-label="Sections">
+            <a class="page-chip" href="/posts/">Posts</a>
+            <a class="page-chip" href="/projects/">Projects</a>
+            <a class="page-chip" href="https://dev.to/wassim31">Articles</a>
+            <a class="page-chip" href="/cv/">CV</a>
+            <a class="page-chip" href="/about/">About</a>
+            <a class="page-chip" href="/search/">Search</a>
+        </nav>
+    </div>
+</div>
+<section class="posts">
+    {%- if site.posts.size > 0 -%}
+    <h3 id="recent-posts">Recent Posts</h3>
+    <ul>
+        {%- for post in site.posts limit:10 -%}
+        <li>
+            <h4>
+                <a class="post-link" href="{{ post.url | relative_url }}">
+                    {{ post.title | escape }}
+                </a>
+            </h4>
+            {%- assign date_format = site.minima.date_format | default: "%b %-d,
+            %Y" -%}
+            <p class="post-meta">
+                {{ post.date | date: date_format }} {%- if post.tags.size > 0
+                -%}
+                <span class="post-tags">
+                    {%- for tag in post.tags -%}
+                    <a href="/search#{{ tag | url_encode }}" class="post-tag"
+                        >{{ tag }}</a
+                    >
+                    {%- endfor -%}
+                </span>
+                {%- endif -%}
+            </p>
+            {%- if post.description -%}
+            <p class="post-description">{{ post.description }}</p>
+            {%- endif -%}
+        </li>
+        {%- endfor -%}
+    </ul>
+    {%- if site.posts.size > 10 -%}
+    <p><a href="/posts/">View all posts</a></p>
+    {%- endif -%} {%- endif -%}
+</section>
+
+<hr />
+<h3 id="projects">Projects</h3>
+<ul class="project-list">
+    <li>
+        <h4><a href="https://outstanding-creativity-production-b5ce.up.railway.app/">OptRoute</a></h4>
+        <p>Route optimization web app for efficient path planning and delivery routing.</p>
+    </li>
+    <li>
+        <h4><a href="https://github.com/wassim31/Orsh">Orsh</a></h4>
+        <p>Open source shell written in C for Linux systems.</p>
+    </li>
+    <li>
+        <h4><a href="https://github.com/wassim31/Laravel_Passport">Laravel Passport</a></h4>
+        <p>OAuth2 server implementation with Laravel Passport for secure API authentication.</p>
+    </li>
+    <li>
+        <h4><a href="https://github.com/wassim31/Django-Assignment-Tracker-Authentication-API">Django Assignment Tracker</a></h4>
+        <p>RESTful API for assignment tracking and authentication using Django.</p>
+    </li>
+    <li>
+        <h4><a href="https://github.com/wassim31/sockets">Sockets</a></h4>
+        <p>Socket programming projects and network communication experiments.</p>
+    </li>
+    <li>
+        <h4><a href="https://github.com/wassim31/nest_js_tem">NestJS Template</a></h4>
+        <p>Starter template for NestJS backend projects with best practices.</p>
+    </li>
+</ul>
+<p><a href="/projects/">View all projects</a></p>
+
+<section id="articles">
+    <h3 id="article-list">Articles</h3>
+    <ul>
+        <li>
+            <h4>
+                <a href="https://dev.to/wassim31/saving-the-state-of-an-interactive-container-3pnj"
+                    >Saving the state of an interactive container</a
+                >
+            </h4>
+            <p>
+                Committing the state of an interactive Docker container so
+                testing environments survive restarts (Sep 2024)
+            </p>
+        </li>
+        <li>
+            <h4>
+                <a href="https://dev.to/wassim31/install-opencv-45-on-ubuntu-2204-306i"
+                    >Install OpenCV 4.5 on Ubuntu 22.04</a
+                >
+            </h4>
+            <p>
+                A step-by-step guide to building and installing OpenCV from
+                source on Ubuntu (Sep 2024)
+            </p>
+        </li>
+        <li>
+            <h4>
+                <a href="https://dev.to/wassim31/real-time-disk-size-expanding-in-a-virtual-machine-on-linux-machine-307i"
+                    >Real-time disk size expanding in a Linux virtual machine</a
+                >
+            </h4>
+            <p>
+                Growing a VM disk on the fly while compiling the Linux kernel
+                on AlmaLinux (Jul 2024)
+            </p>
+        </li>
+        <li>
+            <h4>
+                <a href="https://dev.to/wassim31/cafe-babe-if-you-know-you-know-jvm-enthusiast-nda"
+                    >CAFE BABE, if you know, you know</a
+                >
+            </h4>
+            <p>
+                The story behind the magic number at the start of every JVM
+                class file (Dec 2023)
+            </p>
+        </li>
+        <li>
+            <h4>
+                <a href="https://dev.to/wassim31/how-your-programs-functions-are-handled-in-memory--afl"
+                    >How your program's functions are handled in memory</a
+                >
+            </h4>
+            <p>
+                How the kernel manages a program's functions on the call stack
+                (Dec 2023)
+            </p>
+        </li>
+        <li>
+            <h4>
+                <a href="https://dev.to/wassim31/what-the-heck-is-locality-of-reference-why-i-will-waste-brain-cells-bytes-to-know-it-1l48"
+                    >What the heck is locality of reference?</a
+                >
+            </h4>
+            <p>
+                Why locality of reference matters for software performance
+                (Sep 2023)
+            </p>
+        </li>
+    </ul>
+    <p><a href="https://dev.to/wassim31">View all articles on dev.to</a></p>
+</section>

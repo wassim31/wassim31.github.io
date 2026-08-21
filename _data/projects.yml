@@ -1,0 +1,36 @@
+---
+- name: Orsh
+  url: https://github.com/wassim31/Orsh
+  description: Open source shell written in C for Linux systems.
+  stars: 12
+  language: C
+- name: OptRoute
+  url: https://outstanding-creativity-production-b5ce.up.railway.app/
+  description: Route optimization web app for efficient path planning and delivery routing.
+  stars: 0
+  language:
+- name: Laravel Passport
+  url: https://github.com/wassim31/Laravel_Passport
+  description: OAuth2 server implementation with Laravel Passport for secure API authentication.
+  stars: 0
+  language: PHP
+- name: Django Assignment Tracker
+  url: https://github.com/wassim31/Django-Assignment-Tracker-Authentication-API
+  description: RESTful API for assignment tracking and authentication using Django.
+  stars: 0
+  language: Python
+- name: Sockets
+  url: https://github.com/wassim31/sockets
+  description: Socket programming projects and network communication experiments.
+  stars: 0
+  language: C
+- name: BRISQUE Video Calculator
+  url: https://github.com/wassim31/BRISQUE_Video_Calculator
+  description: Video quality assessment using a BRISQUE algorithm implementation.
+  stars: 0
+  language: Python
+- name: NestJS Template
+  url: https://github.com/wassim31/nest_js_tem
+  description: Starter template for NestJS backend projects with best practices.
+  stars: 0
+  language: TypeScript

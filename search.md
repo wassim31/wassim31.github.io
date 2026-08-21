@@ -1,0 +1,16 @@
+---
+layout: page
+title: Search
+permalink: /search/
+description: Search articles about distributed systems, Linux internals, and backend engineering.
+---
+
+<input type="text" id="search-input" placeholder="Search posts..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+
+<div id="search-tags">
+{% for tag in site.data.stats.tags limit:15 %}<a href="#" class="search-tag" data-tag="{{ tag.name }}">{{ tag.name }}</a> {% endfor %}
+</div>
+
+<div id="search-results"></div>
+
+<script src="/search.js"></script>

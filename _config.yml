@@ -1,0 +1,32 @@
+title: Wassim Boussebha Abdessamed
+url: https://wassim31.github.io
+email: wassim.boussebha@imt-atlantique.fr
+author:
+  name: Wassim Boussebha Abdessamed
+  email: wassim.boussebha@imt-atlantique.fr
+tagline: Backend Software Engineer and Distributed Systems Researcher
+description: Backend software engineer and PhD researcher at IMT Atlantique working on distributed systems, storage systems, cloud computing, and operating systems.
+logo: /face.jpg
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /face.jpg
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-archives
+
+jekyll-archives:
+  enabled:
+    - year
+    - month
+  layout: archive
+  permalinks:
+    year: '/:year/'
+    month: '/:year/:month/'
+
+exclude:
+  - .ruby-lsp

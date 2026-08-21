@@ -1,0 +1,61 @@
+---
+layout: default
+title: All Posts
+permalink: /posts/
+description: Articles about distributed systems, Linux internals, and backend engineering.
+---
+
+{%- assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" -%}
+
+<div class="posts-layout">
+
+<div class="posts-main">
+{%- for year in posts_by_year -%}
+<h3><a href="/{{ year.name }}/">{{ year.name }}</a></h3>
+<section class="posts">
+  {%- for post in year.items -%}
+  <div class="post-item">
+    <h4>
+      <a class="post-link" href="{{ post.url | relative_url }}">
+        {{ post.title | escape }}
+      </a>
+    </h4>
+    {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+    <p class="post-meta">
+      {{ post.date | date: date_format }}
+      {%- if post.tags.size > 0 -%}
+      <span class="post-tags">
+        {%- for tag in post.tags -%}
+        <a href="/search#{{ tag | url_encode }}" class="post-tag">{{ tag }}</a>
+        {%- endfor -%}
+      </span>
+      {%- endif -%}
+    </p>
+    {%- if post.description -%}
+    <p class="post-description">{{ post.description }}</p>
+    {%- endif -%}
+  </div>
+  {%- endfor -%}
+</section>
+{%- endfor -%}
+</div>
+
+<aside class="posts-sidebar">
+<h3 id="archives">Archives</h3>
+<ul>
+{%- for year in posts_by_year -%}
+  <li>
+    <a href="/{{ year.name }}/">{{ year.name }}</a>
+    {%- assign months_in_year = year.items | group_by_exp: "post", "post.date | date: '%m'" -%}
+    <ul>
+    {%- for month in months_in_year -%}
+      {%- assign month_name = month.items.first.date | date: "%B" -%}
+      <li><a href="/{{ year.name }}/{{ month.name }}/">{{ month_name }}</a> ({{ month.size }})</li>
+    {%- endfor -%}
+    </ul>
+  </li>
+{%- endfor -%}
+</ul>
+</aside>
+
+</div>

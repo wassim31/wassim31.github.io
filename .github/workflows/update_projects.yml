@@ -1,0 +1,45 @@
+name: Update Projects
+
+on:
+  schedule:
+    - cron: '0 7 * * 0'
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: update-projects
+  cancel-in-progress: true
+
+jobs:
+  update:
+    name: Update Projects
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 
+        with:
+          persist-credentials: false
+
+      - uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1.321.0
+        with:
+          ruby-version: '3.4'
+
+      - name: Update projects
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: rake projects
+
+      - name: Commit changes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          if ! git diff --quiet; then
+            git add _data/projects.yml
+            git commit -m 'Update GitHub projects'
+            git push "https://x-access-token:${GH_TOKEN}@github.com/${REPO}" HEAD
+          fi
