@@ -44,7 +44,7 @@ Alongside research, I've spent several years building backend systems:
 - At **LabLabee**, I validated lab environments simulating 4G/5G/IMS networks with Docker containers and contributed to a migration from DigitalOcean to AWS.
 - At **American Corner Oran**, I built a library and HR system with Spring Boot, ReactJS, and MySQL that reduced manual admin work by 20+ hours per week.
 
-My broader interests include Linux kernel systems, cloud infrastructure management, and cloud-native applications (Kubernetes & eBPF). Some of my open source projects are on the [projects page](/projects/), and I write about Linux internals, containers, and systems programming on [dev.to](https://dev.to/wassim31).
+My broader interests include Linux kernel systems, cloud infrastructure management, and cloud-native applications (Kubernetes & eBPF). Some of my open source projects are on the [projects page](/projects/), and I write about Linux internals, containers, and systems programming [here on this blog](/posts/) (originally published on [dev.to](https://dev.to/wassim31)).
 
 ### Elsewhere
 
