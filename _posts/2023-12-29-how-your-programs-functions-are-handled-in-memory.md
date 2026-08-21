@@ -17,6 +17,8 @@ okay , when you disassemble either with objdump or gdb , you can see the assembl
 gdb ./main
 disassemble function
 
+![Disassembly of main and function showing the function prologue](/images/posts/how-your-programs-functions-are-handled-in-memory/functions.png)
+
 you'll find some sections like .text , .bss or .data , heap and the stack these are the sections of the virtual address space of your program .
 
 what concern us is the .text section , it contains the code ( instructions to be executed [ for example int x = 3 will have the equivalent of movl  $0x3,-0x4(%rbp)]) 

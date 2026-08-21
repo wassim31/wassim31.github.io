@@ -9,6 +9,8 @@ image: /images/posts/how-the-heck-a-c-program-is-compiled-from-human-comprehensi
 
 You may wondered how the programming languages lexemes are turned into a series of 0's and 1's aka binary files ?
 
+![Compilation pipeline from source code to running process](/images/posts/how-the-heck-a-c-program-is-compiled-from-human-comprehensible-language-to-0s-and-1s/pic.png)
+
 Figure 2.11 - Book reference : Operating system concepts.
 
 Let's discover that together step by step :
