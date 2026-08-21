@@ -137,6 +137,14 @@ img{
 }
 
 /* Post content styles */
+.post-cover{
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 0 0 28px;
+}
+
 .post-content{
   font-size: 16px;
   line-height: 1.7;

@@ -22,6 +22,10 @@ layout: default
       {%- endif -%}</p>
   </header>
 
+  {%- if page.image and page.image != "/face.jpg" -%}
+  <img class="post-cover" src="{{ page.image | relative_url }}" alt="{{ page.title | escape }}" itemprop="image">
+  {%- endif -%}
+
   <div class="post-content e-content" itemprop="articleBody">
     {{ content }}
   </div>

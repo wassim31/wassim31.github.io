@@ -29,7 +29,7 @@ description: Wassim Boussebha Abdessamed is a PhD researcher at IMT Atlantique w
 
 I'm a PhD researcher at [IMT Atlantique](https://www.imt-atlantique.fr/en) working at the intersection of distributed systems, storage systems, cloud computing, and operating systems.
 
-My main areas of interest include systems programming, distributed systems, Linux internals, networking, cloud-native infrastructure, and AI infrastructure. I enjoy working close to the system and understanding how software interacts with the kernel, network, hardware, and distributed infrastructure. Most performance stories — and most outages — are written at that layer, and I find it endlessly interesting.
+My main areas of interest include systems programming, distributed systems, Linux internals, networking, cloud-native infrastructure, and AI infrastructure. I enjoy working close to the system and understanding how software interacts with the kernel, network, hardware, and distributed infrastructure. Most performance stories and most outages are written at that layer, and I find it endlessly interesting.
 
 I primarily work with C, Go, Linux, eBPF, Kubernetes, Docker, and networking technologies. I'm particularly interested in high-performance systems, distributed infrastructure, and the infrastructure required to build and run large-scale AI workloads.
 
