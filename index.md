@@ -1,5 +1,5 @@
 ---
 layout: home
 title: Wassim Boussebha Abdessamed
-description: Backend software engineer and PhD researcher at IMT Atlantique working on distributed systems, storage systems, cloud computing, and operating systems.
+description: AI infrastructure and distributed storage researcher at IMT Atlantique. Working close to the system with C, Go, Linux, eBPF, and Kubernetes.
 ---

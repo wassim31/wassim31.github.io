@@ -2,10 +2,10 @@
 layout: page
 title: Wassim Boussebha Abdessamed's CV
 permalink: /cv/
-description: CV for Wassim Boussebha Abdessamed, backend software engineer and doctoral researcher in distributed systems at IMT Atlantique.
+description: CV for Wassim Boussebha Abdessamed, AI infrastructure and distributed storage researcher at IMT Atlantique.
 ---
 
-Backend software engineer and doctoral researcher with experience across backend systems, cloud infrastructure, and systems research. Currently researching data movement efficiency in large-scale distributed infrastructures at IMT Atlantique.
+AI infrastructure and distributed storage researcher with an engineering background in backend systems and cloud infrastructure. Currently researching data movement efficiency in large-scale distributed infrastructures at IMT Atlantique. Working primarily with C, Go, Linux, eBPF, Kubernetes, and Docker.
 
 ### Research
 

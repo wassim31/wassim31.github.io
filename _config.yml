@@ -4,8 +4,8 @@ email: wassim.boussebha@imt-atlantique.fr
 author:
   name: Wassim Boussebha Abdessamed
   email: wassim.boussebha@imt-atlantique.fr
-tagline: Backend Software Engineer and Distributed Systems Researcher
-description: Backend software engineer and PhD researcher at IMT Atlantique working on distributed systems, storage systems, cloud computing, and operating systems.
+tagline: AI Infrastructure & Distributed Storage Researcher
+description: PhD researcher at IMT Atlantique working on AI infrastructure, distributed storage, and operating systems. Working close to the system with C, Go, Linux, eBPF, and Kubernetes.
 logo: /face.jpg
 defaults:
   - scope:
