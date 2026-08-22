@@ -30,3 +30,4 @@ jekyll-archives:
 
 exclude:
   - .ruby-lsp
+  - POST_TEMPLATE.md
