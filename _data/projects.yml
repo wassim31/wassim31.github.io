@@ -1,36 +1,135 @@
 ---
-- name: Orsh
-  url: https://github.com/wassim31/Orsh
-  description: Open source shell written in C for Linux systems.
+- name: orsh
+  url: https://github.com/wassim31/orsh
+  description: ORSH - is an Oranios simple shell written in order to understand how
+    shells work .
   stars: 12
   language: C
-- name: OptRoute
-  url: https://outstanding-creativity-production-b5ce.up.railway.app/
-  description: Route optimization web app for efficient path planning and delivery routing.
-  stars: 0
-  language:
-- name: Laravel Passport
-  url: https://github.com/wassim31/Laravel_Passport
-  description: OAuth2 server implementation with Laravel Passport for secure API authentication.
-  stars: 0
-  language: PHP
-- name: Django Assignment Tracker
-  url: https://github.com/wassim31/Django-Assignment-Tracker-Authentication-API
-  description: RESTful API for assignment tracking and authentication using Django.
-  stars: 0
-  language: Python
-- name: Sockets
-  url: https://github.com/wassim31/sockets
-  description: Socket programming projects and network communication experiments.
+  pushed_at: '2024-06-12T22:32:54Z'
+- name: C-Data-Structures
+  url: https://github.com/wassim31/C-Data-Structures
+  description: 'Implementation of popular data structures with the C programming language '
+  stars: 5
+  language: C
+  pushed_at: '2022-10-25T06:08:25Z'
+- name: Sahla
+  url: https://github.com/wassim31/Sahla
+  description: 'My programming language '
+  stars: 4
+  language: Java
+  pushed_at: '2022-10-25T19:02:56Z'
+- name: Student-Management-System
+  url: https://github.com/wassim31/Student-Management-System
+  description: 'designing an object-oriented system which manages the students & their
+    enrolling courses and various features. '
+  stars: 3
+  language: Java
+  pushed_at: '2022-09-20T21:43:43Z'
+- name: zoom_bash
+  url: https://github.com/wassim31/zoom_bash
+  description: a shell script to help bash users to zoom_in & zoom_out the text in
+    bash CLI
+  stars: 3
+  language: Shell
+  pushed_at: '2023-12-27T21:42:16Z'
+- name: simpler_orsh
+  url: https://github.com/wassim31/simpler_orsh
+  description: i just decided to write another shell as i was reading Abraham Silberchatz
+    book about Operating systems, the assignement asks for this , so i decided to
+    create a minimal version of my project orsh , with one file
+  stars: 1
+  language: C
+  pushed_at: '2025-03-12T03:26:19Z'
+- name: shared_memory
+  url: https://github.com/wassim31/shared_memory
+  description: This project demonstrates Inter-Process Communication (IPC) using POSIX
+    shared memory (shm_open) . A child process generates the Collatz sequence for
+    a given number and writes it to shared memory. The parent process reads and prints
+    the sequence.
+  stars: 1
+  language: C
+  pushed_at: '2025-03-08T20:42:41Z'
+- name: object-creation-time
+  url: https://github.com/wassim31/object-creation-time
+  description: A java program to display the exact time ( h/m/s ) of the instantiation
+    of the class aka object creation.
+  stars: 1
+  language: Java
+  pushed_at: '2022-06-05T17:35:25Z'
+- name: OOP-Plays
+  url: https://github.com/wassim31/OOP-Plays
+  description: Bunch of programs built with beautiful object oriented design that
+    respects the clean code rules.
+  stars: 1
+  language: Java
+  pushed_at: '2022-09-07T22:21:25Z'
+- name: Array-Reverser-FILE
+  url: https://github.com/wassim31/Array-Reverser-FILE
+  description: 'A program that reverse an array using file handling '
   stars: 0
   language: C
-- name: BRISQUE Video Calculator
-  url: https://github.com/wassim31/BRISQUE_Video_Calculator
-  description: Video quality assessment using a BRISQUE algorithm implementation.
+  pushed_at: '2021-03-10T00:59:42Z'
+- name: strlen_many_approachs
+  url: https://github.com/wassim31/strlen_many_approachs
+  description: A C-program where i implemented the different approach of string length
+    problem using iterative , recursive , pointers & addresses approaches
+  stars: 0
+  language: C
+  pushed_at: '2021-07-24T02:19:41Z'
+- name: my_leetcode_solutions
+  url: https://github.com/wassim31/my_leetcode_solutions
+  description: repository which contains my solutions to leetcode.com problems , and
+    geeksforgeeks exercices to develop my problem_solving skills
+  stars: 0
+  language: C
+  pushed_at: '2021-08-07T14:58:56Z'
+- name: HTTP-Server-Java
+  url: https://github.com/wassim31/HTTP-Server-Java
+  description: 'Goal : implement HTTP RFC using Java .'
+  stars: 0
+  language: Java
+  pushed_at: '2024-02-11T18:14:24Z'
+- name: hash_map_C
+  url: https://github.com/wassim31/hash_map_C
+  description: 'Hash_Map implementation in C '
+  stars: 0
+  language: C
+  pushed_at: '2024-02-29T13:45:40Z'
+- name: email_sender_bot
+  url: https://github.com/wassim31/email_sender_bot
+  description: 'a script that receives as an input a well-formatted csv(name,email)
+    file and sends an email to multiple addresses '
   stars: 0
   language: Python
-- name: NestJS Template
+  pushed_at: '2024-09-17T04:26:01Z'
+- name: BRISQUE_Video_Calculator
+  url: https://github.com/wassim31/BRISQUE_Video_Calculator
+  description: a C++ real-time visual stream acquisition system that incorporates
+    quality control using the BRISQUE
+  stars: 0
+  language: C++
+  pushed_at: '2024-10-01T18:48:58Z'
+- name: sockets
+  url: https://github.com/wassim31/sockets
+  description: manipulating both tcp , udp sockets with both C , Java
+  stars: 0
+  language: Java
+  pushed_at: '2024-10-08T19:20:55Z'
+- name: Django-Assignment-Tracker-Authentication-API
+  url: https://github.com/wassim31/Django-Assignment-Tracker-Authentication-API
+  description: Django Assignment Tracker & Authentication API
+  stars: 0
+  language: Python
+  pushed_at: '2025-04-26T02:26:32Z'
+- name: nest_js_tem
   url: https://github.com/wassim31/nest_js_tem
-  description: Starter template for NestJS backend projects with best practices.
+  description: 'Nest_js API for product management with user authentication '
   stars: 0
   language: TypeScript
+  pushed_at: '2025-08-14T04:56:06Z'
+- name: Laravel_Passport
+  url: https://github.com/wassim31/Laravel_Passport
+  description: Laravel 11 using Passport OAuth for Products CRUD
+  stars: 0
+  language: PHP
+  pushed_at: '2025-08-29T09:34:19Z'
