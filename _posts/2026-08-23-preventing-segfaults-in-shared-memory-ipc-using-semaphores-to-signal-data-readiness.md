@@ -2,25 +2,17 @@
 layout: post
 title: "Preventing Segfaults in Shared Memory IPC: Using Semaphores to Signal Data Readiness"
 date: 2026-08-23 10:00:00 +0000
-description: "mmap() succeeding doesn't mean the data behind it is valid. Why reading shared memory before the writer is done causes intermittent segfaults, and how a semaphore closes that race."
+description: "mmap() succeeding doesn't mean the data behind it is valid. A close look at the race where a reader touches shared memory before the writer is done, and how a semaphore closes it."
 tags: [c, linux, ipc, systemsprogramming]
 ---
 
-Here's a bug that's genuinely annoying to chase down: your reader process calls `shm_open()`, it succeeds. It calls `mmap()`, it succeeds. Every syscall you're checking tells you everything is fine. And then, sometimes, not always, the process segfaults anyway, or prints garbage instead of the message the writer sent.
+Here's a bug that'll make you want to throw your laptop across the room: the reader process calls `shm_open()`, it succeeds. It calls `mmap()`, it also succeeds. Every syscall you bothered to check is green. And then, sometimes, not always, the process segfaults anyway, or prints garbage where the writer's message was supposed to be.
 
-If you've hit this, your instinct is probably to double-check the shared memory setup. The segment exists, the size is right, the permissions are right. That's not where the bug is. The bug is in *when* the reader looked at the memory, not *whether* it was allowed to.
+If this is happening to you right now, your first move is probably to go re-check the shared memory setup. Right name, right size, right permissions. That's not where the bug is. It's not that the reader wasn't allowed to look at the memory. It's that it looked too early.
 
-## Two different problems that look identical from the outside
+(There's a different bug that looks similar from far away: the reader runs before the writer has even created the segment, so `shm_open()` itself returns `-1`. That one's boring, you fix it by checking your return values and refusing to continue on a bad fd. It's not what's happening here, and I'm not going to spend more time on it, because the interesting case, and the one that actually costs people hours, is the one where every single syscall succeeds and the crash happens anyway.)
 
-Before going further, it's worth separating two failure modes that get conflated constantly, because the fix for one does nothing for the other.
-
-**Problem one: the segment doesn't exist yet.** The reader runs before the writer has created it. `shm_open()` returns `-1`, or a subsequent `mmap()` on a bad file descriptor fails. This is a lifecycle problem, and you fix it the boring way: check the return value of every syscall, and fail loudly (or retry the *open*, deliberately) instead of plowing ahead.
-
-**Problem two: the segment exists, but the data inside it isn't ready yet.** This is the one this article is about. `shm_open()` succeeds. `mmap()` succeeds. The memory is right there, mapped, readable. It's just that the writer hasn't finished writing to it, or hasn't written to it at all, and the reader has no way to know that from the syscalls it just called successfully.
-
-Semaphores solve problem two. Error-checking solves problem one. Neither solves the other, and if you only implement one of them, you'll fix one class of crash and be baffled by the other still happening intermittently.
-
-## Why a successful mmap doesn't mean the data is valid
+## What's actually sitting in that memory
 
 Here's the setup. The writer creates the shared memory object and sizes it:
 
@@ -30,11 +22,11 @@ ftruncate(fd, 4096);
 void *addr = mmap(NULL, 4096, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
 ```
 
-`ftruncate()` here does two things: it sets the segment's size to 4096 bytes, and on a freshly created segment, it zero-fills those bytes. That's the key detail. Zero-filled is not the same thing as "contains the data I'm about to send you." It's zeros. Meaningless zeros, that happen to be sitting there because the kernel had to put something in newly allocated pages.
+`ftruncate()` does two things here: it sets the segment to 4096 bytes, and since this is a freshly created object, it zero-fills those bytes on the way there. That's not a courtesy, it's the kernel refusing to hand your process leftover contents of some physical page it doesn't know the history of. Fine. But "zero-filled" is not "contains the message the writer is about to send." It's zeros. Placeholder bytes that happen to be sitting there because something had to be.
 
-And that's the *best* case. If the segment already existed from a previous run of your program (more on this later), those bytes aren't even guaranteed to be zero. They're whatever was left over from last time.
+And that's the *good* case. If the segment already existed from an earlier run of your program, and you didn't clean it up, `ftruncate()` to the same size it already has does nothing at all. No zeroing, no reset. Whatever was in there from last time is still in there, and it is very much not guaranteed to look like zeros.
 
-Now say the writer and reader agree on this layout:
+Say the writer and reader agree on this layout:
 
 ```c
 typedef struct payload {
@@ -43,7 +35,7 @@ typedef struct payload {
 } payload;
 ```
 
-The writer's job, eventually, is to set `length` and copy a string into `buffer`. The reader's job is to read `length`, then copy that many bytes out:
+The writer's job is eventually to set `length` and copy a string into `buffer`. The reader's job is to read `length`, then copy that many bytes back out:
 
 ```c
 size_t length = *(size_t *)addr;
@@ -51,50 +43,61 @@ char string[length];
 memcpy(string, (char *)addr + sizeof(size_t), length);
 ```
 
-Walk through what happens if the reader gets there first, before the writer has written anything.
+Now picture the two processes starting at roughly the same time, which is the normal case, not some pathological edge case you have to work hard to trigger:
 
-`length` gets read from memory that's either all zeros or full of stale garbage from a previous run. If it's zero, `char string[length]` is a zero-length VLA, and the `memcpy()` copies zero bytes; you get an empty string. Confusing, but survivable.
+```
+writer                              reader
+------                              ------
+shm_open(O_CREAT)
+ftruncate()
+mmap()
+                                     shm_open()   <- segment exists, succeeds
+                                     mmap()       <- mapping is valid, succeeds
+                                     length = *(size_t *)addr   <- reads zeros or stale bytes
+data->length = length
+memcpy(data->buffer, ...)
+```
 
-If it's stale garbage, though, `length` could be anything a `size_t` can hold. Say it happens to be some enormous number. `char string[length]` tries to reserve that many bytes on the stack, on the spot, as a variable-length array. That's not a heap allocation that fails gracefully and returns `NULL`. It's a stack pointer bump. If the number is big enough, you blow past the end of the stack before you've written a single byte, and the kernel kills the process with a segfault right there, on the *declaration*, before `memcpy()` is even called.
+Nothing in that reader column failed. There's no line in there you could wrap in an `if` and catch. The reader just happened to read `length` a few instructions before the writer got around to setting it, and there was nothing stopping it from doing so.
 
-And if the size happens to be merely large-but-not-catastrophic, `memcpy()` then reads that many bytes starting from `addr + sizeof(size_t)`. If that runs past the end of the 4096-byte mapping, you're reading unmapped memory, which is its own segfault, or you're reading whatever else happens to be mapped nearby, which is a quieter, worse bug: it doesn't crash, it just hands you garbage that looks like data.
+So what does the reader actually get? If the segment was freshly zeroed, `length` comes out as `0`. `char string[length]` is a zero-length VLA, `memcpy()` copies nothing, and you get an empty string. Weird output, but the process survives.
 
-None of this shows up as a failed syscall. `shm_open()` returned a valid fd. `mmap()` returned a valid pointer. Everything you'd normally check was fine. The crash comes from what the reader did *after* those calls succeeded, because it assumed success meant "the data is ready," when all it actually meant was "the memory is mapped."
+If the segment had stale bytes from a previous run instead, `length` can be anything a `size_t` holds. Say it comes out enormous. `char string[length]` isn't a heap allocation that can fail gracefully and hand you `NULL`. It's a stack pointer bump, done on the spot, at the point of declaration. If that number is big enough, you blow through the rest of the stack before you've written a single byte of the string, and the process dies right there, on a line that doesn't even mention `memcpy()`.
 
-## Why the obvious fixes don't work
+And if the garbage length is large but not stack-shattering large, `memcpy()` goes ahead and reads that many bytes starting at `addr + sizeof(size_t)`. Run past the end of the 4096-byte mapping and you get a segfault from touching unmapped memory. Or you don't run quite that far, and instead you silently read whatever else happens to be mapped nearby, and hand your caller a string that isn't garbage-looking at all, it's just wrong. That second version is worse, because nothing crashes and nothing looks broken.
 
-Once you've diagnosed this as a timing problem, the first instinct is usually some flavor of "just wait a bit." None of the common versions of that actually work.
+The thing worth sitting with here is that `shm_open()` returned a valid fd and `mmap()` returned a valid pointer both times, in both the empty-string case and the stack-overflow case. The syscalls did their job. The bug is entirely downstream of them, in the assumption that a successful mapping means there's something meaningful behind it.
 
-**Retry loops with `sleep()`.** Poll `length`, and if it looks unset, sleep for a bit and check again. This "works" on your machine, most of the time, because your writer probably finishes in a few milliseconds and your sleep is probably a full second. It's not a fix, it's a race with worse odds. Under load, or on a slower machine, or if the writer does anything before writing (allocates memory, reads a config file, anything), your sleep duration is just a guess about how long that takes. Guess wrong once and you're back to the original bug, just less often.
+## sleep() is not a fix
 
-**Checking "is it still all zeros."** Aside from being another poll loop with the same timing problem, this has a correctness issue on top: zero is a legitimate value. If the writer's real message happens to produce a `length` of zero, or the first 8 bytes of a valid payload happen to be zero, your "is it ready" check is indistinguishable from "isn't ready yet." And per the stale-data point above, "non-zero" doesn't mean "written by this run" either. A previous run's leftover data can easily be non-zero, which means your check can report "ready" for a segment the current writer hasn't touched at all.
+Once you've figured out it's a timing problem, the first instinct is almost always some version of "just wait a little before reading." None of the usual ways of doing that actually close the race.
 
-**Assuming the OS schedules the writer first.** There's no such guarantee, and there's no reason to expect one. Process creation order, `fork()`/`exec()` timing, and scheduler decisions are not something POSIX promises you control over. Even if the writer process technically starts first, "started" isn't "finished writing." If the writer does any work at all before it gets to writing the payload, that's a window where a reader that started a moment later can still get there first.
+The most common one is a retry loop with `sleep()` in it: poll `length`, and if it still looks unset, sleep and check again. This appears to work, most of the time, because your writer probably finishes in a few milliseconds and your sleep is probably a full second, so in practice you never catch it in the act. That's not the same thing as it being fixed. It's a race where you've made the reader's side slower, which changes the odds without touching the actual problem. Put the machine under load, or add anything at all to the writer's startup, like reading a config file or allocating a buffer, and your sleep duration stops being generous enough. You're back to the original bug, just less often, which honestly might be worse, because now it's the kind of bug that only shows up in production.
 
-What all three of these share is that they're trying to infer readiness from the *content* of memory, or from timing, when what you actually need is an explicit, unambiguous signal from the writer that says "I am done." That's precisely what a semaphore gives you.
+A slightly smarter-sounding version checks whether the memory is still all zeros before reading it. This has the same timing problem as the sleep loop, plus a correctness problem of its own: zero is a perfectly legitimate value. If the writer's real payload happens to produce a `length` of `0`, or the first eight bytes of a valid message happen to be zero, your "is it ready yet" check can't tell that apart from "not ready yet." And as covered above, if the segment wasn't freshly zeroed, "non-zero" doesn't mean "written by this run" either. Leftover bytes from an old run can easily be non-zero, so this check can happily report "looks ready" on a segment the current writer hasn't touched at all.
 
-## Semaphore as a one-directional signal
+And then there's just assuming the writer runs first because you start it first. There's no guarantee anywhere that backs this up. Process creation order and scheduler decisions aren't something POSIX promises you control over, and even setting that aside, "started first" isn't "finished writing." If the writer does anything at all before it gets to the actual write, that's a window where a reader that technically started later can still get there first.
 
-If you've used semaphores before, it was probably as a mutex: a binary semaphore initialized to 1, where a thread calls `sem_wait()` to acquire it, does some work, and calls `sem_post()` to release it. Both sides call both functions. It's symmetric, and it protects a critical section.
+All three of these are trying to guess readiness from either the contents of the memory or the passage of time. What you actually want is for the writer to tell you, explicitly, "I'm done," and for the reader to be physically unable to proceed until it hears that. That's what a semaphore gives you, and it's the only one of these that isn't a guess.
 
-That's not the pattern here, and mentally filing this under "semaphore = lock" will make the rest of this confusing. What we want is a **readiness signal**, and it looks different in two specific ways:
+## A semaphore that only goes one way
 
-- **The initial value is 0, not 1.** Zero means "nothing to report yet." A lock starts at 1 because the resource is initially available; a readiness signal starts at 0 because the data is initially *not* ready.
-- **The two sides do different things.** The writer only ever calls `sem_post()`. The reader only ever calls `sem_wait()`. Nobody waits and posts around the same operation the way you would with a mutex. It's one-directional: writer speaks, reader listens.
+If you've used semaphores before, it was probably as a mutex: a binary semaphore that starts at 1, where a thread calls `sem_wait()` to grab it, does some work, and calls `sem_post()` to hand it back. Both sides call both functions. It's symmetric, and it's protecting a critical section.
 
-The mechanics that make this work are worth being precise about:
+That's not what we're building here, and thinking of this as "a lock" will make the rest of it confusing. What we want is a readiness signal, and it differs in two specific ways:
 
-`sem_wait()` decrements the semaphore's internal counter. If the counter is already at 0, it doesn't decrement past that; it blocks, parking the calling thread until someone else increments the count. It genuinely suspends the process. There's no spinning, no polling, no `sleep()` involved.
+- It starts at 0, not 1. Zero means "nothing to report yet." A lock starts at 1 because the resource is free from the beginning; a readiness signal starts at 0 because the data isn't ready from the beginning, and shouldn't be treated as ready until someone says otherwise.
+- The two sides don't do the same thing. The writer only ever calls `sem_post()`. The reader only ever calls `sem_wait()`. Nobody waits and posts around the same operation the way a mutex would have both sides do. It only goes one direction: the writer speaks once, the reader listens once.
 
-`sem_post()` increments the counter, and if there's a thread blocked in `sem_wait()`, it wakes exactly one of them.
+The mechanics: `sem_wait()` decrements the semaphore's counter. If the counter's already at 0, it doesn't go negative, it just blocks, parking the calling process until something else bumps the count back up. This is a genuine suspension, handled by the kernel, not a spin loop and not a `sleep()` in disguise. `sem_post()` increments the counter, and if there's a process sitting in `sem_wait()`, it wakes exactly one of them.
 
-Trace through what this means for our reader and writer. The semaphore starts at 0. The reader calls `sem_wait()` before touching a single byte of the mapped memory. Since the count is 0, the reader blocks, immediately, at that line. It physically cannot execute the next line of code. Meanwhile the writer writes `length`, writes `buffer`, and only once both are written does it call `sem_post()`. That increments the count from 0 to 1, and wakes the reader. The reader's `sem_wait()` call returns, and only now does it proceed to read `length` and `buffer`.
+Put that back into our reader and writer. The semaphore starts at 0. The reader hits `sem_wait()` before it has touched a single byte of the mapped memory, sees a count of 0, and blocks right there. It cannot execute the next line. It's not choosing to wait, it's stuck. Meanwhile the writer sets `length`, copies the string into `buffer`, and only after both of those are done does it call `sem_post()`. That's what bumps the count and wakes the reader up. The reader's `sem_wait()` returns, and only now, after the writer is provably finished, does the reader go read `length` and `buffer`.
 
-There's no window in this sequence where the reader can observe a partially-written or not-yet-written payload, because the reader's code literally cannot reach the code that reads the payload until the writer has already called `sem_post()`, which the writer only does after finishing the write. That's the entire race from the earlier section, closed by construction.
+Go back to the diagram from earlier. There's no version of it anymore where the reader's read of `length` can land before the writer's write of `length`, because the line that does the reading is now behind a wall the writer built, and the writer only takes that wall down once it's actually done.
 
-## The full worked example
+## Here's the fix, in full
 
-Here's a complete writer and reader, with error-checking on every syscall this time. The writer owns creation of both the shared memory object and the semaphore; the reader just opens what's already there.
+Complete writer and reader, error-checked this time. The writer owns creating both the shared memory object and the semaphore; the reader just opens what's already there.
 
 **writer.c**
 
@@ -231,28 +234,24 @@ int main(void) {
 }
 ```
 
-A couple of details worth pointing out. The writer calls `shm_open()` and `sem_open()` with `O_CREAT`; the reader calls both without it, so if it runs before the writer has created either one, it fails immediately with a clear `ENOENT` from `perror()` instead of silently creating something. And the reader copies the payload into a heap buffer sized with `malloc()` rather than a stack VLA. `length` here comes from a cooperating process on the same machine, not from an untrusted or adversarial source, so this isn't the same threat model as parsing attacker-controlled input, but it's still worth not trusting a size read out of shared memory for a stack allocation by default. If you want the deeper argument for why, and how to validate a length before using it, I wrote about that specifically in [Safe Length-Based Data Sharing in C](/2026/08/22/safe-length-based-data-sharing-in-c.html).
+The writer passes `O_CREAT` to both `shm_open()` and `sem_open()`; the reader passes neither, so if it happens to run before the writer has created either one, it fails immediately with a plain `ENOENT` instead of quietly creating something itself. The `shm_open()`/`mmap()` checks are what catch that case specifically; `sem_wait()` is what catches the one this whole article is about, where the segment exists but isn't populated yet. The two don't overlap and neither one covers for the other.
 
-> **Two problems, two fixes, in this exact example.** The `shm_open()`/`mmap()` error checks above handle the case where the segment doesn't exist at all: run the reader before the writer has ever run, and `shm_open()` returns `-1`, which we catch and exit on. The semaphore handles the separate case where the segment exists but isn't populated: run the writer and reader in either order, and the reader's `sem_wait()` guarantees it only reads the payload after the writer has finished writing it. Neither mechanism substitutes for the other.
+One more thing about the reader: it copies the payload into a heap buffer sized with `malloc()`, not a stack VLA like the earlier broken version. `length` here is coming from a cooperating process on the same machine rather than something adversarial, so this isn't quite the same threat model as parsing untrusted input, but I still wouldn't size a stack array off a number I read out of shared memory without thinking about it first. If you want the longer version of that argument, I wrote a whole piece on it: [Safe Length-Based Data Sharing in C](/2026/08/22/safe-length-based-data-sharing-in-c.html).
 
-## Pitfalls that will bite you anyway
+## The pitfalls that get you anyway
 
-**Stale semaphore state between runs.** POSIX named semaphores don't go away when your process exits. They live in the kernel (backed by a file under `/dev/shm` on Linux) until something explicitly calls `sem_unlink()`, or the system reboots. This matters a lot here, because it can make the exact bug this article is about disappear from your testing while still being present in your code.
+POSIX named semaphores don't go away when your process exits. They live in the kernel, backed by a file under `/dev/shm` on Linux, until something explicitly calls `sem_unlink()`, or the machine reboots. This bites people in a specific and annoying way: it can make the exact race this article is about disappear from your testing while still being sitting in your code.
 
-Say you run the writer and reader once, cleanly. The writer posts, the reader waits and consumes it. The semaphore ends the run at 0. Fine. Now say you run the writer *twice* in a row, maybe testing something, before running the reader at all. Each run calls `sem_post()` once, and since the semaphore already existed from the first run, `sem_open(SEM_NAME, O_CREAT, ...)` on the second run just returns the existing one, unchanged, ignoring the initial-value argument entirely, because `O_CREAT` on an already-existing semaphore doesn't reset it. So after two writer runs, the count sits at 2.
+Say you run the writer and reader once, cleanly. Writer posts, reader waits and consumes it, semaphore ends the run at 0. Now say you run the writer *twice* in a row, before ever running the reader, maybe because you're testing something else entirely. Each run calls `sem_post()`. Since the semaphore already existed after the first run, the second run's `sem_open(SEM_NAME, O_CREAT, ...)` just hands back the existing one, unchanged, because `O_CREAT` on an object that already exists ignores the initial-value argument you gave it. So after two writer runs, the count sits at 2.
 
-Now the reader runs. Its `sem_wait()` sees a non-zero count and returns immediately, without ever actually blocking. If you're mid-refactor and there's a bug that causes the *next* writer run to not post at all, or to crash before writing the payload, you won't see it: the leftover count from an earlier run masks it completely, and the reader sails through `sem_wait()` and reads whatever garbage happens to be sitting in the segment. The exact race this whole article is about, quietly reintroduced, by a semaphore that looks like it's doing its job.
+Now the reader runs. Its `sem_wait()` sees a non-zero count and returns immediately, without ever actually blocking on anything. If you happen to be mid-refactor and there's a bug that makes the *next* writer run crash before it writes anything, or skip the write entirely, you will not see it. The leftover count from an earlier run covers for it completely, and the reader sails through `sem_wait()` and reads whatever's sitting in the segment from before. It's the exact race from the top of this article, quietly back, except this time it's hiding behind a semaphore that looks, from the outside, like it's doing its job.
 
-The fix is `sem_unlink(SEM_NAME)` and `shm_unlink(SHM_NAME)` between test runs, so each run starts from a genuinely fresh semaphore at your intended initial value and a genuinely fresh (zeroed) shared memory segment, not whatever state the last run left behind.
+The fix is `sem_unlink(SEM_NAME)` and `shm_unlink(SHM_NAME)` between runs, so each run starts from a genuinely fresh semaphore at the value you meant, and a genuinely fresh, zeroed segment, instead of whatever the last run happened to leave behind.
 
-**Deciding who owns `O_CREAT`.** In the example above, the writer creates both the shared memory object and the semaphore; the reader only opens them. This is a deliberate choice, not an arbitrary one. If both sides pass `O_CREAT`, you no longer have a clear answer to "who decided the initial value," because `O_CREAT`'s mode and initial-value arguments are only honored by whichever process's open call actually creates the object first, and that's a race in itself if both processes start around the same time. Pick one process to own creation, have it create both objects before doing anything else, and have the other process open them without `O_CREAT` so a missing object fails loudly instead of getting silently, ambiguously created by the wrong side.
+The other thing worth deciding on purpose, not by accident: who owns `O_CREAT`. In the example above, the writer creates both the shared memory object and the semaphore, and the reader only ever opens what's already there. That's not arbitrary. If both sides pass `O_CREAT`, there's no longer a clean answer to "who set the initial value," because those creation arguments only take effect for whichever process's open call happens to run first, and if both processes start around the same moment, that's a race of its own. Pick one side to own creation, have it create both objects before doing anything else, and have the other side open them without `O_CREAT`, so a missing object fails loudly instead of getting created ambiguously by whichever process got there first.
 
-## Summary
+## So, back to that segfault
 
-| | Segment doesn't exist yet | Segment exists but data isn't ready |
-|---|---|---|
-| What you'll see | `shm_open()` returns `-1`, or `mmap()` fails on a bad fd | `shm_open()` and `mmap()` both succeed; the crash or garbage happens later |
-| What's actually wrong | Lifecycle ordering: the reader ran before the writer created the object | Timing: the reader read the memory before the writer finished writing it |
-| How you catch it | Checking the return value of `shm_open()` and `mmap()` | You can't catch it by checking `mmap()`'s return value; it succeeds either way |
-| The fix | Error-check the open calls and fail fast, or coordinate creation order at a level above shared memory | A semaphore (or equivalent readiness signal) the reader waits on before touching the mapping |
-| What it looks like unfixed | An immediate, consistent crash on a missing segment | An intermittent segfault or garbage read, present only when timing goes wrong |
+If you're staring at a reader that segfaults sometimes, or hands back garbage sometimes, and every syscall you're checking is returning success, it's very likely this. Not a missing segment, not a bad permission bit, not a corrupted mapping. Just a reader that got to the memory before the writer was done with it, because nothing was stopping it from trying.
+
+A semaphore initialized to 0, posted once by the writer after it's actually finished, waited on once by the reader before it touches anything, closes that gap completely. Not by making the race less likely. By making it structurally impossible for the reader's read to land before the writer's write.
