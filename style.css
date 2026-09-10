@@ -137,6 +137,28 @@ img{
 }
 
 /* Post content styles */
+.diagram{
+  margin: 28px 0;
+  text-align: center;
+}
+
+.diagram img{
+  max-width: 100%;
+  height: auto;
+}
+
+.diagram-dark{
+  display: none;
+}
+
+[data-theme="dark"] .diagram-light{
+  display: none;
+}
+
+[data-theme="dark"] .diagram-dark{
+  display: inline-block;
+}
+
 .post-cover{
   display: block;
   width: 100%;
