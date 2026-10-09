@@ -188,7 +188,3 @@ Removal runs `ps_exit()`. Reinsert to execute initialization again. Compare with
 The module stays loaded after printing; it doesn't continuously refresh the listing.
 
 Test inside a QEMU Linux guest, building against its kernel. Missing headers stop compilation; version mismatch can produce “Invalid module format.” Check `dmesg`. Unloading needs kernel support and no outstanding module references. Secure Boot may reject unsigned modules.
-
-## What we learned
-
-We accessed `task_struct`, followed embedded linked lists through kernel macros, and executed C in kernel space. Next, inspect parent-child relationships through `real_parent`, `children`, and `sibling`, checking their locking requirements first.
