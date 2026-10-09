@@ -12,7 +12,7 @@
   --color-blockquote: #59636e;
   --color-code-bg: #f6f8fa;
   --color-code-inline-bg: rgba(175, 184, 193, 0.2);
-  --color-code-inline-text: #c62871;
+  --color-code-inline-text: #006ab2;
   --color-border: #d1d9e0;
   --color-section-border: #eee;
   --color-table-alt: #f6f8fa;
@@ -30,7 +30,7 @@
     --color-blockquote: #8b949e;
     --color-code-bg: #161b22;
     --color-code-inline-bg: rgba(110, 118, 129, 0.4);
-    --color-code-inline-text: #ff75b5;
+    --color-code-inline-text: #9cdcfe;
     --color-border: #30363d;
     --color-section-border: #21262d;
     --color-table-alt: #161b22;
@@ -48,7 +48,7 @@
   --color-blockquote: #8b949e;
   --color-code-bg: #161b22;
   --color-code-inline-bg: rgba(110, 118, 129, 0.4);
-  --color-code-inline-text: #ff75b5;
+  --color-code-inline-text: #9cdcfe;
   --color-border: #30363d;
   --color-section-border: #21262d;
   --color-table-alt: #161b22;
@@ -226,6 +226,7 @@ img{
 }
 
 .post-content pre code{
+  color: inherit;
   display: inline;
   padding: 0;
   margin: 0;
@@ -237,6 +238,59 @@ img{
   font-size: 100%;
   white-space: pre;
 }
+
+/* Rouge token colors inspired by VS Code's light and dark palettes. */
+.post-content .highlight{
+  --syntax-keyword: #0000ff;
+  --syntax-type: #267f99;
+  --syntax-name: #001080;
+  --syntax-function: #795e26;
+  --syntax-string: #a31515;
+  --syntax-number: #098658;
+  --syntax-comment: #008000;
+  --syntax-preprocessor: #795e26;
+  --syntax-error: #b91c1c;
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .post-content .highlight{
+    --syntax-keyword: #569cd6;
+    --syntax-type: #4ec9b0;
+    --syntax-name: #9cdcfe;
+    --syntax-function: #dcdcaa;
+    --syntax-string: #ce9178;
+    --syntax-number: #b5cea8;
+    --syntax-comment: #6a9955;
+    --syntax-preprocessor: #c586c0;
+    --syntax-error: #f48771;
+  }
+}
+
+[data-theme="dark"] .post-content .highlight{
+  --syntax-keyword: #569cd6;
+  --syntax-type: #4ec9b0;
+  --syntax-name: #9cdcfe;
+  --syntax-function: #dcdcaa;
+  --syntax-string: #ce9178;
+  --syntax-number: #b5cea8;
+  --syntax-comment: #6a9955;
+  --syntax-preprocessor: #c586c0;
+  --syntax-error: #f48771;
+}
+
+.post-content .highlight :is(.k, .kc, .kd, .kn, .kp, .kr, .ow){ color: var(--syntax-keyword); }
+.post-content .highlight :is(.kt, .nc, .nn){ color: var(--syntax-type); }
+.post-content .highlight :is(.n, .na, .nb, .bp, .ni, .nl, .nt, .nv, .vc, .vg, .vi, .vm){ color: var(--syntax-name); }
+.post-content .highlight :is(.nf, .fm){ color: var(--syntax-function); }
+.post-content .highlight :is(.s, .sa, .sb, .sc, .dl, .sd, .s1, .s2, .se, .sh, .si, .sr, .ss, .sx){ color: var(--syntax-string); }
+.post-content .highlight :is(.m, .mb, .mf, .mh, .mi, .il, .mo, .mx){ color: var(--syntax-number); }
+.post-content .highlight :is(.c, .c1, .cm, .cs, .ch){ color: var(--syntax-comment); }
+.post-content .highlight :is(.cp, .cpf){ color: var(--syntax-preprocessor); }
+.post-content .highlight :is(.o, .p, .w){ color: var(--color-text); }
+.post-content .highlight :is(.err, .gr, .gd){ color: var(--syntax-error); }
+.post-content .highlight .gi{ color: var(--syntax-comment); }
+.post-content .highlight :is(.ge, .ges){ font-style: italic; }
+.post-content .highlight :is(.gs, .ges){ font-weight: bold; }
 
 /* Blockquotes */
 .post-content blockquote{
