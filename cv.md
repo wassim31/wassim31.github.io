@@ -2,10 +2,10 @@
 layout: page
 title: Wassim Boussebha Abdessamed's CV
 permalink: /cv/
-description: CV for Wassim Boussebha Abdessamed, AI infrastructure and distributed storage researcher at IMT Atlantique.
+description: CV for Wassim Boussebha Abdessamed, operating systems and low-level systems researcher at IMT Atlantique.
 ---
 
-AI infrastructure and distributed storage researcher with an engineering background in backend systems and cloud infrastructure. Currently researching data movement efficiency in large-scale distributed infrastructures at IMT Atlantique. Working primarily with C, Go, Linux, eBPF, Kubernetes, and Docker.
+Operating systems and low-level systems researcher focused on the Linux kernel, filesystems, and networking, with an engineering background in backend systems and cloud infrastructure. Currently researching data movement efficiency in large-scale distributed infrastructures at IMT Atlantique. Working primarily with C, Go, Linux, and eBPF.
 
 ### Research
 

@@ -2,7 +2,7 @@
 layout: page
 title: About
 permalink: /about/
-description: Wassim Boussebha Abdessamed is a PhD researcher at IMT Atlantique working on AI infrastructure, distributed storage, and operating systems.
+description: Wassim Boussebha Abdessamed is a PhD researcher at IMT Atlantique working on operating systems, Linux kernel internals, filesystems, and networking.
 ---
 
 <script type="application/ld+json">
@@ -14,9 +14,9 @@ description: Wassim Boussebha Abdessamed is a PhD researcher at IMT Atlantique w
     "name": "Wassim Boussebha Abdessamed",
     "url": "{{ site.url }}",
     "image": "{{ site.url }}/face.jpg",
-    "jobTitle": "AI Infrastructure & Distributed Storage Researcher",
+    "jobTitle": "Operating Systems & Low-Level Systems Researcher",
     "description": "{{ page.description }}",
-    "knowsAbout": ["AI Infrastructure", "Distributed Systems", "Storage Systems", "Operating Systems", "Linux", "eBPF", "Kubernetes"],
+    "knowsAbout": ["Operating Systems", "Linux Kernel", "Filesystems", "Networking", "Distributed Storage", "eBPF"],
     "sameAs": [
       "https://github.com/wassim31",
       "https://linkedin.com/in/wassimboussebha",
@@ -29,9 +29,9 @@ description: Wassim Boussebha Abdessamed is a PhD researcher at IMT Atlantique w
 
 I'm a PhD researcher at [IMT Atlantique](https://www.imt-atlantique.fr/en) working at the intersection of distributed systems, storage systems, cloud computing, and operating systems.
 
-My main areas of interest include systems programming, distributed systems, Linux internals, networking, cloud-native infrastructure, and AI infrastructure. I enjoy working close to the system and understanding how software interacts with the kernel, network, hardware, and distributed infrastructure. Most performance stories and most outages are written at that layer, and I find it endlessly interesting.
+My main areas of interest include operating systems, Linux kernel internals, low-level systems programming, filesystems, and networking. I enjoy working close to the system and understanding how software interacts with the kernel, network, hardware, and distributed infrastructure. Most performance stories and most outages are written at that layer, and I find it endlessly interesting.
 
-I primarily work with C, Go, Linux, eBPF, Kubernetes, Docker, and networking technologies. I'm particularly interested in high-performance systems, distributed infrastructure, and the infrastructure required to build and run large-scale AI workloads.
+I primarily work with C, Go, Linux, and eBPF. I'm particularly interested in filesystem and networking internals, how they interact with hardware, and how to optimize their performance and reliability, as well as distributed storage and high-performance networking.
 
 ### What I'm working on
 
@@ -49,4 +49,4 @@ Some of my open source projects are on the [projects page](/projects/), and I wr
 
 You can find me on [GitHub](https://github.com/wassim31), [LinkedIn](https://linkedin.com/in/wassimboussebha), [dev.to](https://dev.to/wassim31), and [Twitter](https://twitter.com/oran_wassim). There's also my [CV](/cv/).
 
-If you want to chat about AI infrastructure, distributed storage, Linux internals, or systems engineering, email me at [wassim.boussebha@imt-atlantique.fr](mailto:wassim.boussebha@imt-atlantique.fr).
+If you want to chat about operating systems, Linux internals, filesystems, networking, or distributed storage, email me at [wassim.boussebha@imt-atlantique.fr](mailto:wassim.boussebha@imt-atlantique.fr).

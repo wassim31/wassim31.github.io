@@ -4,8 +4,8 @@ email: wassim.boussebha@imt-atlantique.fr
 author:
   name: Wassim Boussebha Abdessamed
   email: wassim.boussebha@imt-atlantique.fr
-tagline: AI Infrastructure & Distributed Storage Researcher
-description: PhD researcher at IMT Atlantique working on AI infrastructure, distributed storage, and operating systems. Working close to the system with C, Go, Linux, eBPF, and Kubernetes.
+tagline: Operating Systems & Low-Level Systems Researcher
+description: PhD researcher at IMT Atlantique passionate about operating systems, Linux kernel internals, filesystems, and networking. Working close to the system with C, Go, Linux, and eBPF.
 logo: /face.jpg
 defaults:
   - scope:
